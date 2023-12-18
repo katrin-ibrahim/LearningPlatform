@@ -1,0 +1,17 @@
+# Ignore virtual environment
+env/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables
+.env
+
+# If you are using SQLite Database
+*.db
+
+alembic/
+
+backend/design.md
+```
