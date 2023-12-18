@@ -1,19 +1,20 @@
 from fastapi import FastAPI
 from typing import Union
-from routers import course_router, auth_router
+from routers import course_router, auth_router, user_router
 
 from database import Base, SessionLocal
 from database import engine
 from sqlalchemy import text
 
 
-
-
 app = FastAPI()
 
 app.include_router(course_router.router)
 app.include_router(auth_router.router)
+app.include_router(user_router.router)
+
 Base.metadata.create_all(bind=engine)
+
 @app.get("/reset_db")
 def reset_db():
     try:
