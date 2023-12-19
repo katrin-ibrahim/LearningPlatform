@@ -1,5 +1,6 @@
 import shutil
-from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File
+from fastapi import APIRouter, Depends, HTTPException, status, File
+from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 import schemas, models
 from typing import List
@@ -20,8 +21,13 @@ def create_lesson(course_id: int, lesson: schemas.LessonBase, db: Session = Depe
     db.add(new_lesson)
     db.commit()
     db.refresh(new_lesson)
-    # return lesson with id
-    return new_lesson
+    lesson_with_id = schemas.LessonWithId(
+        lesson_id=new_lesson.lesson_id,
+        title=new_lesson.title,
+        description=new_lesson.description,
+    )
+    return lesson_with_id
+ 
 
 @router.post("/lessons/{lesson_id}/upload", status_code=status.HTTP_201_CREATED)
 async def upload_file(lesson_id: int, file: bytes = File(...), db: Session = Depends(get_db)):
@@ -47,6 +53,16 @@ async def upload_file(lesson_id: int, file: bytes = File(...), db: Session = Dep
 
     return {"message": "File uploaded successfully"}
 
+
+
+@router.get("/lessons/{lesson_id}/download")
+async def download_file(lesson_id: int, db: Session = Depends(get_db)):
+    lesson = db.query(models.Lesson).filter(models.Lesson.lesson_id == lesson_id).first()
+    if not lesson or not lesson.file_path:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"File for lesson with id {lesson_id} not found")
+
+    # Serve the file for download
+    return FileResponse(path=lesson.file_path, filename="downloaded_file.bin")
 
 # get lessons for a specific course
 @router.get("/courses/{course_id}/lessons", response_model=List[schemas.LessonBase])

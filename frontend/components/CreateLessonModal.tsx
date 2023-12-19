@@ -118,7 +118,7 @@ export default function CreateLessonModal(props: CreateLessonModalProps) {
                                 Description
                             </label>
                             <textarea
-                                className="w-full flex items-center px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-grey-400 dark:focus:bg-gray-600 mb-7 placeholder:text-grey-700 dark:placeholder-gray-300 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-2xl"
+                                className="w-full flex items-center px-5 py-5 mr-2 text-sm font-medium outline-none focus:bg-grey-400 dark:focus:bg-gray-600 mb-7 placeholder:text-grey-700 dark:placeholder-gray-300 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-2xl"
                                 placeholder="Description"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
