@@ -10,7 +10,7 @@ router = APIRouter()
 # create a lesson in a specific course
 @router.post("/courses/{course_id}/lessons", status_code=status.HTTP_201_CREATED)
 def create_lesson(course_id: int, lesson: schemas.LessonBase, db: Session = Depends(get_db)):
-    course = db.query(models.Course).filter(models.Course.id == course_id).first()
+    course = db.query(models.Course).filter(models.Course.course_id == course_id).first()
     if not course:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Course with id {course_id} not found")
     
@@ -24,7 +24,7 @@ def create_lesson(course_id: int, lesson: schemas.LessonBase, db: Session = Depe
 # upload a file to a specific lesson
 @router.post("/lessons/{lesson_id}/upload", status_code=status.HTTP_201_CREATED)
 async def upload_file(lesson_id: int, file: UploadFile = File(...), db: Session = Depends(get_db)):
-    lesson = db.query(models.Lesson).filter(models.Lesson.id == lesson_id).first()
+    lesson = db.query(models.Lesson).filter(models.Lesson.lesson_id == lesson_id).first()
     if not lesson:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Lesson with id {lesson_id} not found")
     # Save the file to the server
@@ -39,7 +39,7 @@ async def upload_file(lesson_id: int, file: UploadFile = File(...), db: Session 
 # get lessons for a specific course
 @router.get("/courses/{course_id}/lessons", response_model=List[schemas.LessonBase])
 def get_lessons(course_id: int, db: Session = Depends(get_db)):
-    course = db.query(models.Course).filter(models.Course.id == course_id).first()
+    course = db.query(models.Course).filter(models.Course.course_id == course_id).first()
     if not course:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Course with id {course_id} not found")
     return db.query(models.Lesson).filter(models.Lesson.course_id == course_id).all()

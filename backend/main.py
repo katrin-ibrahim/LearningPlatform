@@ -18,23 +18,16 @@ Base.metadata.create_all(bind=engine)
 origins = [ "http://localhost:3000", ]
 app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
-@app.get("/", tags=["root"])
-async def read_root() -> dict:
-    return {"message": "Welcome to your FastAPI server."}
+# reset the database
+@app.get("/reset")
+def reset():
+    db = SessionLocal()
+    # cascade delete all tables
+    db.execute(text("DELETE FROM user_course"))
+    db.execute(text("DELETE FROM users"))
+    db.execute(text("DELETE FROM lessons"))
+    db.execute(text("DELETE FROM courses"))
+    Base.metadata.create_all(bind=engine)
+    return {"message": "Database reset"}
 
-@app.get("/reset_db")
-def reset_db():
-    try:
-        db: Session = SessionLocal()
 
-            # Drop all tables in the database
-        db.execute(text("DROP TABLE IF EXISTS users CASCADE"))
-        db.execute(text("DROP TABLE IF EXISTS user_courses CASCADE"))
-        db.execute(text("DROP TABLE IF EXISTS courses CASCADE"))
-
-        # Create all tables
-        Base.metadata.create_all(bind=engine)
-
-        return {"message": "Database reset successfully"}
-    except Exception as e:
-        return {"error": str(e)}

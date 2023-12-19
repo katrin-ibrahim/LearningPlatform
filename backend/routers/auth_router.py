@@ -17,15 +17,7 @@ def register(user: schemas.UserBase, db: Session = Depends(get_db)):
     db.refresh(new_user)
     return new_user
 
-# get users
-@router.get("/users")
-def get_users(db: Session = Depends(get_db)):
-    users = db.query(models.User).all()
-    return users
-
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-
 @router.post("/token")
 def login(form_data: schemas.UserLogin, db: Session = Depends(get_db)):
     username = form_data.username
@@ -51,5 +43,5 @@ def login(form_data: schemas.UserLogin, db: Session = Depends(get_db)):
     # If the username and password are correct, return a token
     # Here you should implement your token generation logic
     token = secrets.token_urlsafe(16)
-    return {"access_token": token, "user_id": user.id, "username": user.username}
+    return {"access_token": token, "user_id": user.user_id, "username": user.username}
 
