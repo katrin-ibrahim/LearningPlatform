@@ -24,11 +24,10 @@ def get_users(db: Session = Depends(get_db)):
     return users
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-oath2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-# login user
+
 @router.post("/token")
-def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+def login(form_data: schemas.UserLogin, db: Session = Depends(get_db)):
     username = form_data.username
     password = form_data.password
 
@@ -52,4 +51,5 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     # If the username and password are correct, return a token
     # Here you should implement your token generation logic
     token = secrets.token_urlsafe(16)
-    return {"access_token": token, "token_type": "bearer"} 
+    return {"access_token": token, "user_id": user.id, "username": user.username}
+

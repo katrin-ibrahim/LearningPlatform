@@ -1,0 +1,14 @@
+# Ignore virtual environment
+env/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables
+.env
+
+design.md
+
+
+```

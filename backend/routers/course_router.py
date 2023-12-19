@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 import schemas, models
 from database import get_db
 
@@ -8,7 +8,7 @@ router = APIRouter()
 # return all courses
 @router.get("/courses")
 def get_courses(db: Session = Depends(get_db)):
-    courses = db.query(models.Course).all()
+    courses = db.query(models.Course).options(joinedload(models.Course.lessons), joinedload(models.Course.users)).all()
     return courses
 
 # create a course

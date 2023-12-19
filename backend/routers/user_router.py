@@ -8,13 +8,20 @@ from database import get_db
 router = APIRouter()
 
 # get courses for a specific user
-@router.get("/users/{user_id}/courses", response_model=List[schemas.CourseBase])
+@router.get("/users/{user_id}/courses", response_model=List[schemas.UserCourses])
 def get_courses(user_id: int, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.id == user_id).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with id {user_id} not found")
     # Join courses and user_courses on course_id and filter out courses where user id matches
-    return db.query(models.Course).join(models.user_course).filter(models.user_course.c.user_id == user_id).all()
+    courses = db.query(models.Course).join(models.user_course).filter(models.user_course.c.user_id == user_id).all()
+    # find teacher name for each course and add it to the response
+    for course in courses:
+        teacher = db.query(models.User).filter(models.User.id == course.teacher_id).first()
+        course.teacher_name = teacher.username
+        # add course id to the response
+        course.course_id = course.id
+    return courses
 
 # enroll a user in a course
 @router.post("/users/{user_id}/courses/{course_id}")
