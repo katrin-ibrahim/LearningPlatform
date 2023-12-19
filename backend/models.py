@@ -32,5 +32,6 @@ class Lesson(Base):
     lesson_id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
     description = Column(String, index=True)
+    file_path = Column(String, index=True, nullable=True)
     course_id = Column(Integer, ForeignKey("courses.course_id"))
     course = relationship("Course", back_populates="lessons")

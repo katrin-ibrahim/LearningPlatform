@@ -1,3 +1,4 @@
+from fastapi import UploadFile
 from pydantic import BaseModel
 from typing import List
 
@@ -24,4 +25,10 @@ class UserLogin(BaseModel):
 # Lesson SCHEMAS
 class LessonBase(BaseModel):
     title: str
-    content: str
+    description: str
+    
+class LessonWithId(LessonBase):
+    lesson_id: int
+    
+class FileUpload(LessonBase):
+    file: bytes

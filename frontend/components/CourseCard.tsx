@@ -4,7 +4,7 @@ import Link from 'next/link'
 interface CourseCardProps {
     course: Course
     enrolled?: boolean
-    enroll: () => void
+    enroll?: () => void
 }
 
 export default function CourseCard(props: CourseCardProps) {
