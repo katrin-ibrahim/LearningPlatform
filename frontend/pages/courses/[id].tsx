@@ -20,7 +20,7 @@ export default function CourseDetailPage() {
     const [content, setContent] = useState<Lesson[]>([])
     const [showModal, setShowModal] = useState(false)
     const [user, setUser] = useState<User | undefined>(undefined)
-    const base_url = process.env.NEXT__PUBLIC_FASTAPI_URL
+    const base_url = process.env.NEXT_PUBLIC_FASTAPI_URL
 
     useEffect(() => {
         if (router.isReady) {

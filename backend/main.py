@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers import course_router, auth_router, user_router, lesson_router
 
 from database import Base, SessionLocal, engine
-from sqlalchemy import text
+
 
 
 app = FastAPI()
@@ -21,8 +21,6 @@ app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True
 # reset the database
 @app.get("/reset")
 def reset():
-    db = SessionLocal()
-    # cascade delete all tables
     Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
     return {"message": "Database reset"}

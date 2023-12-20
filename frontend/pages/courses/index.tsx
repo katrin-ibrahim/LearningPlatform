@@ -15,7 +15,7 @@ import Header from '@/components/Header'
 export default function Dashboard() {
     const [user, setUser] = useState<User>()
     const [courses, setCourses] = useState<Course[]>([])
-    const base_url = process.env.NEXT__PUBLIC_FASTAPI_URL
+    const base_url = process.env.NEXT_PUBLIC_FASTAPI_URL
     
     useEffect(() => {
         const getCourses = async () => {

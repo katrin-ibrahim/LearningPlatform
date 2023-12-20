@@ -17,7 +17,7 @@ export default function CreateLessonModal(props: CreateLessonModalProps) {
     const [description, setDescription] = useState('');
     const [file, setFile] = useState<File | null>(null);
 
-    const base_url = process.env.NEXT__PUBLIC_FASTAPI_URL
+    const base_url = process.env.NEXT_PUBLIC_FASTAPI_URL
     // Create Lesson function
     const createLesson = async (courseId: number, lessonData: any) => {
         try {

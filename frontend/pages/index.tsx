@@ -16,14 +16,14 @@ export default function LoginPage() {
 
     // Router to redirect user to Home
     const router = useRouter()
-    const base_url = process.env.NEXT__PUBLIC_FASTAPI_URL
+    const base_url = process.env.NEXT_PUBLIC_FASTAPI_URL
 
     const handleSubmit = async (e: any) => {
         e.preventDefault()
         try {
             // Send a request to backend to authenticate the user.
             const response = await axios.post(
-                `${base_url}/token`,
+                `http://localhost:8000/token`,
                 {
                     username: username,
                     password: password,

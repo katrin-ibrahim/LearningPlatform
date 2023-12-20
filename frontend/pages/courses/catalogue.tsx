@@ -23,7 +23,7 @@ export default function Catalogue() {
     const [user, setUser] = useState<User | undefined>(undefined)
 
     const router = useRouter()
-    const base_url = process.env.NEXT__PUBLIC_FASTAPI_URL
+    const base_url = process.env.NEXT_PUBLIC_FASTAPI_URL
     const enrollUser = async (course_id: number) => {
         try {
             const response = await axios.post(
