@@ -3,7 +3,6 @@ from sqlalchemy.orm import relationship
 from database import Base
 
 # This is the association table for the many-to-many relationship between User and Course
-# A teacher can teach many courses and a course can have many teachers
 user_course = Table('user_course', Base.metadata,
     Column('user_id', Integer, ForeignKey('users.user_id')),
     Column('course_id', Integer, ForeignKey('courses.course_id')),
@@ -12,6 +11,7 @@ user_course = Table('user_course', Base.metadata,
 class User(Base):
     __tablename__ = "users"
     user_id = Column(Integer, primary_key=True, index=True)
+    full_name = Column(String, index=True)
     username = Column(String, index=True)
     password = Column(String, index=True)
     courses = relationship("Course", secondary=user_course, back_populates="users")

@@ -1,6 +1,5 @@
 from fastapi import UploadFile
 from pydantic import BaseModel
-from typing import List
 
 # COURSE SCHEMAS
 class CourseBase(BaseModel):
@@ -14,6 +13,7 @@ class UserCourses(CourseBase):
 
 # USER SCHEMAS
 class UserBase(BaseModel):
+    full_name: str
     username: str
     password: str
     role: str

@@ -18,7 +18,8 @@ def get_courses(db: Session = Depends(get_db)):
     - List of courses.
     - Courses are returned with their lessons and users.
     """
-    courses = db.query(models.Course).options(joinedload(models.Course.lessons), joinedload(models.Course.users)).all()
+    courses = db.query(models.Course).all()
+    # 
     return courses
 
 # create a course

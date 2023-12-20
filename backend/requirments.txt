@@ -1,6 +1,0 @@
-fastapi==0.105.0
-uvicorn==0.24.0.post1
-sqlalchemy==1.4.23
-psycopg2==2.9.3
-pydantic==2.5.2
-python-dotenv==1.0.0

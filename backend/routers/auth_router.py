@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 import schemas, models
@@ -11,7 +10,7 @@ router = APIRouter()
 @router.post("/register", status_code=status.HTTP_201_CREATED)
 def register(user: schemas.UserBase, db: Session = Depends(get_db)):
     hashed_password = pwd_context.hash(user.password)
-    new_user = models.User(username=user.username, password=hashed_password, role=user.role)
+    new_user = models.User(username=user.username, password=hashed_password, role=user.role, full_name=user.full_name)
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
@@ -43,5 +42,4 @@ def login(form_data: schemas.UserLogin, db: Session = Depends(get_db)):
     # If the username and password are correct, return a token
     # Here you should implement your token generation logic
     token = secrets.token_urlsafe(16)
-    return {"access_token": token, "user_id": user.user_id, "username": user.username}
-
+    return {"access_token": token, "user_id": user.user_id, "username": user.username, "role": user.role}

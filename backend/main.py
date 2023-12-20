@@ -23,10 +23,7 @@ app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True
 def reset():
     db = SessionLocal()
     # cascade delete all tables
-    # db.execute(text("DELETE FROM user_course"))
-    # db.execute(text("DELETE FROM users"))
-    db.execute(text("DELETE FROM lessons"))
-    # db.execute(text("DELETE FROM courses"))
+    Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
     return {"message": "Database reset"}
 
