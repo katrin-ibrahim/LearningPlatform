@@ -1,18 +1,33 @@
 import { useEffect, useState } from 'react'
-import Header from '@/components/Header'
+import { useRouter } from 'next/router'
+// Utils
 import axios from 'axios'
-import { Course } from '@/types'
+// Types
+import { Course, User } from '@/types'
+// Components
+import Header from '@/components/Header'
 import CourseCard from '@/components/CourseCard'
+
+// uses eps =>
+// 1. get(`http://localhost:8000/courses`): get all courses
+// 2. post(`http://localhost:8000/users/${user?.user_id}/courses/${course_id}`): enroll a user in a course
+
+// TODO backend: only student can enroll
+// TODO add teacher name to course card
+// TODO backend add teacher name to ep response body
+// TODO add feedback for user(enrolled, already enrolled, error)
 
 export default function Catalogue() {
     const [courses, setCourses] = useState<Course[]>([])
     const [userCourses, setUserCourses] = useState<Course[]>([])
-    const [user, setUser] = useState({ user_id: 0, username: '', token: '' })
+    const [user, setUser] = useState<User | undefined>(undefined)
 
+    const router = useRouter()
+    const base_url = process.env.NEXT__PUBLIC_FASTAPI_URL
     const enrollUser = async (course_id: number) => {
         try {
             const response = await axios.post(
-                `http://localhost:8000/users/${user.user_id}/courses/${course_id}`,
+                `${base_url}/users/${user?.user_id}/courses/${course_id}`,
                 {
                     course_id: course_id,
                 },
@@ -31,7 +46,7 @@ export default function Catalogue() {
     }
     const getCourseCatalogue = async () => {
         try {
-            const response = await axios.get(`http://localhost:8000/courses`, {
+            const response = await axios.get(`${base_url}/courses`, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -47,7 +62,7 @@ export default function Catalogue() {
     const getUserCourses = async () => {
         try {
             const response = await axios.get(
-                `http://localhost:8000/users/${user?.user_id}/courses`,
+                `${base_url}/users/${user?.user_id}/courses`,
                 {
                     headers: {
                         'Content-Type': 'application/json',
@@ -63,14 +78,17 @@ export default function Catalogue() {
     }
 
     useEffect(() => {
-        const storedUser = JSON.parse(sessionStorage.getItem('user') || '{}')
+        const storedUser = JSON.parse(localStorage.getItem('user') || '{}')
         setUser(storedUser)
         getCourseCatalogue()
     }, [])
 
     useEffect(() => {
-        if (user && user.user_id) {
+        if (user && user.user_id && user.role === 'student') {
             getUserCourses()
+        } else if(user && user.user_id && user.role === 'teacher'){
+            // redirect to dashboard
+            router.push('/courses')
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user])
@@ -87,9 +105,7 @@ export default function Catalogue() {
                 <div className="container mx-auto p-5 bg-white dark:bg-gray-800 rounded-xl shadow">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         {courses.map((course) => {
-                            console.log(course.course_id)
                             return (
-                                // Remove unnecessary return statement
                                 <CourseCard
                                     course={course}
                                     key={course.course_id}
@@ -102,7 +118,7 @@ export default function Catalogue() {
                                     )}
                                     enroll={() => enrollUser(course.course_id)}
                                 />
-                            ) // Add closing parenthesis
+                            )
                         })}
                     </div>
                 </div>

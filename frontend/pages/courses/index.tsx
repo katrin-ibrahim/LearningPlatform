@@ -1,41 +1,51 @@
 import { useEffect, useState } from 'react'
-import Header from '@/components/Header'
+// Utils
 import axios from 'axios'
+// Types
 import { Course, User } from '@/types'
+// components
 import CourseCard from '@/components/CourseCard'
+import Header from '@/components/Header'
 
-export default function CoursesPage() {
+// uses eps =>
+// 1. get(`http://localhost:8000/users/${user?.user_id}/courses`): get the courses of a user
+// TODO add teacher name to course card
+// TODO backend add teacher name to ep response body
+
+export default function Dashboard() {
     const [user, setUser] = useState<User>()
     const [courses, setCourses] = useState<Course[]>([])
-
-    const getCourses = async () => {
-        try {
-            const response = await axios.get(
-                `http://localhost:8000/users/${user?.user_id}/courses`,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+    const base_url = process.env.NEXT__PUBLIC_FASTAPI_URL
+    
+    useEffect(() => {
+        const getCourses = async () => {
+            try {
+                const response = await axios.get(
+                    `${base_url}/users/${user?.user_id}/courses`,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                )
+                if (response.status === 200) {
+                    setCourses(response.data)
                 }
-            )
-            if (response.status === 200) {
-                setCourses(response.data)
+            } catch (err) {
+                console.error(err)
             }
-        } catch (err) {
-            console.error(err)
         }
-    }
 
-    useEffect(() => {
-        const storedUser = JSON.parse(sessionStorage.getItem('user') || '{}')
-        setUser(storedUser)
-    }, [])
-
-    useEffect(() => {
         if (user && user.user_id) {
             getCourses()
         }
     }, [user])
+
+    useEffect(() => {
+        const storedUser = JSON.parse(localStorage.getItem('user') || '{}')
+        setUser(storedUser)
+    }, [])
+
 
     return (
         <>

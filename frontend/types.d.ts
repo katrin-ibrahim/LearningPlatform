@@ -1,9 +1,8 @@
 export interface User {
     user_id: number;
     username: string;
-    token: string;
     role: string;
-    courses: Course[];
+    token: string;
 }
 export interface Course {
     course_id: number;

@@ -5,7 +5,8 @@ export default function UserIcon() {
 
   const handleLogout = () => {
     // Handle logout here
-    console.log('Logged in')
+    localStorage.removeItem('user')
+    window.location.href = '/'
   }
 
   // Close the popover when clicking outside
@@ -25,7 +26,7 @@ export default function UserIcon() {
 
   return (
     <div className="relative">
-      <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none">
+      <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-1 mt-1 bg-blue-500 hover:bg-blue-700 rounded-full">
         <svg className="w-6 h-6 text-white dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
         </svg>

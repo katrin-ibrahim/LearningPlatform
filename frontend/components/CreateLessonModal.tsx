@@ -1,8 +1,9 @@
-// modal to create a new lesson
-// fields: title, description, file upload
-
 import { useState } from 'react'
+// Utils
 import axios from 'axios'
+
+// TODO: Only teacher can create lesson
+// TODO: feedback for user
 
 interface CreateLessonModalProps {
     course_id: number
@@ -16,11 +17,12 @@ export default function CreateLessonModal(props: CreateLessonModalProps) {
     const [description, setDescription] = useState('');
     const [file, setFile] = useState<File | null>(null);
 
+    const base_url = process.env.NEXT__PUBLIC_FASTAPI_URL
     // Create Lesson function
     const createLesson = async (courseId: number, lessonData: any) => {
         try {
             const response = await axios.post(
-                `http://localhost:8000/courses/${courseId}/lessons`,
+                `${base_url}/courses/${courseId}/lessons`,
                 lessonData
             );
             if (response.status === 200) {
