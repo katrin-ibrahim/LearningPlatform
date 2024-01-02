@@ -5,13 +5,11 @@ import {
     theme,
 } from '@chakra-ui/react'
 // Components
-import LoginPage from '@/components/LoginPage'
+import LoginPage from '@/components/Login/LoginPage'
 
-export default function Home() {
+export default function Login() {
     return (
-        <ChakraProvider theme={theme}>
-            <CSSReset />
+
             <LoginPage />
-        </ChakraProvider>
     )
 }

@@ -1,7 +1,8 @@
-import React from 'react'
+// Components
+import NavBar from '@/components/Shared/NavBar'
 
 export default function home() {
   return (
-    <div>home</div>
+   <NavBar />
   )
 }

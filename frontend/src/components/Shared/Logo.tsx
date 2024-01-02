@@ -14,7 +14,7 @@ const Logo: React.FC<LogoProps> = ({ variant }) => {
         case 'sm':
             iconSize = '36px';
             fontSize = 'sm';
-            textSize = '18px'
+            textSize = '17px'
             break;
         case 'md':
             iconSize = '46px';
@@ -22,20 +22,21 @@ const Logo: React.FC<LogoProps> = ({ variant }) => {
             textSize = '23px'
             break;
         default:
-            iconSize = '35px';
+            iconSize = '36px';
             fontSize = 'sm';
             textSize = '17px'
             break;
     }
+    const isDark = false;
 
     return (
         <Flex alignItems="center">
            <Image src="/logo.png" alt="Logo" width={iconSize} height={iconSize} />
-           <Flex flexDirection="column" alignItems="stretch" ml={1}>
-            <Text fontFamily="Courier New" fontSize={textSize} display="flex" lineHeight={1} >
+           <Flex flexDirection="column" height={iconSize} ml={1}>
+            <Text fontFamily="Courier New" fontSize={textSize} display="flex" fontWeight={"bold"} lineHeight="1" color={"#B4B0B9"} m={0} >
                 LEARNING
             </Text>
-            <Text fontFamily="Courier New" fontSize={textSize} display="flex" lineHeight={1}>
+            <Text fontFamily="Courier New" fontSize={textSize} display="flex" fontWeight={"bold"} lineHeight={1} color={"#B4B0B9"} m={0}>
                 PLATFORM
             </Text>
         </Flex>

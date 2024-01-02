@@ -2,8 +2,9 @@ import React from 'react'
 // Chakra
 import { Box, Flex, Image, useTheme, Heading } from '@chakra-ui/react'
 // Components
-import LoginForm from '@/components/LoginForm'
-import Logo from '@/components/Logo'
+import LoginForm from '@/components/Login/LoginForm'
+import Logo from '@/components/Shared/Logo'
+import ThemeSelector from '../Shared/ThemeSelector'
 
 export default function LoginPage() {
     return (
