@@ -19,8 +19,8 @@ export default function NavBar() {
       align="flex-start"
       justify="space-between"
       wrap="wrap"
-      px={20}
-      py={10}
+      px={[5, 10, 20]}
+      py={[5, 10]}
     >
       <HStack spacing={4} align="center">
         <Logo variant="sm" />
@@ -32,7 +32,7 @@ export default function NavBar() {
             as={IconButton}
             aria-label="Options"
             icon={<HamburgerIcon />}
-            variant="outline"
+            // variant="ghost"
           />
           <MenuList>
             <Link href="/home">
