@@ -1,6 +1,6 @@
 import React from 'react'
 // Chakra
-import { Box, Flex, Image, useTheme, Heading } from '@chakra-ui/react'
+import { Box, Flex, Image, Heading } from '@chakra-ui/react'
 // Components
 import LoginForm from '@/components/Login/LoginForm'
 import Logo from '@/components/Shared/Logo'

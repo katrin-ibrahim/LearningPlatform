@@ -1,7 +1,8 @@
 // Components
 import CourseCard from '@/components/Shared/CourseCard'
-import NavBar from '@/components/Shared/NavBar'
-import { SimpleGrid, Box } from '@chakra-ui/react'
+import Page from '@/components/Shared/Page'
+import { SimpleGrid, Card } from '@chakra-ui/react'
+import theme from '@/theme'
 
 // Dummy data representing courses
 const courses = [
@@ -52,20 +53,18 @@ const courses = [
     },
 ]
 
+
 export default function home() {
     return (
-        <>
-            <NavBar />
-            <Box px={[5, 10, 20]} py={[5, 10]} >
-                <SimpleGrid
-                    spacing={4}
-                    templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
-                >
-                    {courses.map((course) => (
-                        <CourseCard key={course.name} {...course} />
-                    ))}
-                </SimpleGrid>
-            </Box>
-        </>
+            <Page title="Home">
+                    <SimpleGrid
+                        spacing={4}
+                        templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
+                    >
+                        {courses.map((course) => (
+                            <CourseCard key={course.name} {...course} />
+                        ))}
+                    </SimpleGrid>
+            </Page>
     )
 }

@@ -1,4 +1,5 @@
-import {Card, Image, CardBody, CardFooter, Heading, Text, Button, ButtonGroup, Divider, Stack} from '@chakra-ui/react'
+import {Card, CardBody, CardFooter, Heading, Text, Button, ButtonGroup, Divider, Stack, useColorMode} from '@chakra-ui/react'
+import theme from '@/theme'
 
 interface CourseCardProps {
     name: string;
@@ -8,14 +9,16 @@ interface CourseCardProps {
 
 export default function CourseCard(props: CourseCardProps) {
     const { name, description, teacher } = props;
+    const { colorMode } = useColorMode(); // use the useColorMode hook
 
+    const textColor = colorMode === 'dark' ? theme.colors.dark.text.secondary : theme.colors.light.text.secondary; // set the text color based on the color mode
     
     return (
-        <Card maxW='xs'>
+        <Card maxW='xs' >
         <CardBody>
           <Stack  spacing='3'>
-            <Heading size='md'>{name}</Heading>
-            <Text colorScheme="secondary" size='xs' noOfLines={[1, 2, 3]} >
+            <Heading size='sm'>{name}</Heading>
+            <Text color={textColor} size='xs' noOfLines={[1, 2, 3]} >
               {description}
             </Text>
             <Text>
@@ -23,13 +26,12 @@ export default function CourseCard(props: CourseCardProps) {
             </Text>
           </Stack>
         </CardBody>
-        <Divider />
         <CardFooter>
-            <ButtonGroup spacing='2' w="full">
-            <Button variant='solid' bg="#15BA77" w='50%'>
+            <ButtonGroup >
+            <Button variant='solid' >
               View
             </Button>
-            <Button variant='outline' color="#15BA77" w='50%'>
+            <Button variant='ghost'  w='50%'>
               Unenroll
             </Button>
           </ButtonGroup>

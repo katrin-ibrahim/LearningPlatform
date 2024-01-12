@@ -19,7 +19,6 @@ export default function NavBar() {
       align="flex-start"
       justify="space-between"
       wrap="wrap"
-      px={[5, 10, 20]}
       py={[5, 10]}
     >
       <HStack spacing={4} align="center">
